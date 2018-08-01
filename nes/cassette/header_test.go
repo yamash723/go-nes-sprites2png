@@ -1,34 +1,32 @@
-package cassette_test
+package cassette
 
 import (
 	"testing"
-
-	"github.com/yamash723/go-nes-sprites2png/nes/cassette"
 )
 
-func TestBuildFromBytesSuccess(t *testing.T) {
+func TestNewHeaderSuccess(t *testing.T) {
 	prgPageSize, chrPageSize := 1, 2
 	romBytes := createRomBytes("NES\x1A", prgPageSize, chrPageSize)
 
-	header, err := cassette.BuildFromBytes(romBytes)
+	header, err := newHeader(romBytes)
 	if err != nil {
-		t.Fatalf("BuildFromBytes() is failed. return error: %v", err)
+		t.Fatalf("newHeader() is failed. return error: %v", err)
 	}
 
 	if prgPageSize != header.PrgPageSize {
-		t.Errorf("BuildFromBytes() is failed. program page size is wrong. expect: %v / actual: %v", prgPageSize, header.PrgPageSize)
+		t.Errorf("newHeader() is failed. program page size is wrong. expect: %v / actual: %v", prgPageSize, header.PrgPageSize)
 	}
 
 	if chrPageSize != header.ChrPageSize {
-		t.Errorf("BuildFromBytes() is failed. character page size is wrong. expect: %v / actual: %v", chrPageSize, header.ChrPageSize)
+		t.Errorf("newHeader() is failed. character page size is wrong. expect: %v / actual: %v", chrPageSize, header.ChrPageSize)
 	}
 }
 
-func TestBuildFromBytesWrongMagicNumber(t *testing.T) {
+func TestNewHeaderWrongMagicNumber(t *testing.T) {
 	romBytes := createRomBytes("AAA\x1A", 1, 1)
-	_, err := cassette.BuildFromBytes(romBytes)
+	_, err := newHeader(romBytes)
 	if err == nil {
-		t.Errorf("BuildFromBytes() is succeeded with wrong magic number ")
+		t.Errorf("newHeader() is succeeded with wrong magic number ")
 	}
 }
 

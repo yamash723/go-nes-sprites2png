@@ -11,8 +11,7 @@ type INesHeader struct {
 	ChrPageSize int
 }
 
-// BuildFromBytes is build a INesHeader from rom's header bytes
-func BuildFromBytes(headerBytes [16]byte) (*INesHeader, error) {
+func newHeader(headerBytes [16]byte) (*INesHeader, error) {
 	if bytes.Compare(headerBytes[0:4], []byte("NES\x1A")) != 0 {
 		return nil, errors.New("invalid .nes file. header magic number is wrong")
 	}
