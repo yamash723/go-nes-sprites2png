@@ -6,7 +6,7 @@ import (
 
 func TestNewHeaderSuccess(t *testing.T) {
 	prgPageSize, chrPageSize := 1, 2
-	romBytes := createRomBytes("NES\x1A", prgPageSize, chrPageSize)
+	romBytes := createHeaderBytes("NES\x1A", prgPageSize, chrPageSize)
 
 	header, err := newHeader(romBytes)
 	if err != nil {
@@ -23,14 +23,14 @@ func TestNewHeaderSuccess(t *testing.T) {
 }
 
 func TestNewHeaderWrongMagicNumber(t *testing.T) {
-	romBytes := createRomBytes("AAA\x1A", 1, 1)
+	romBytes := createHeaderBytes("AAA\x1A", 1, 1)
 	_, err := newHeader(romBytes)
 	if err == nil {
 		t.Errorf("newHeader() is succeeded with wrong magic number ")
 	}
 }
 
-func createRomBytes(magicNumber string, prgPageSize, chrPageSize int) [16]byte {
+func createHeaderBytes(magicNumber string, prgPageSize, chrPageSize int) [16]byte {
 	var romBytes [16]byte
 	copy(romBytes[0:4], []byte(magicNumber))
 	romBytes[4] = byte(prgPageSize)
