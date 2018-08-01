@@ -6,7 +6,7 @@ import (
 
 func TestNewHeaderSuccess(t *testing.T) {
 	prgPageSize, chrPageSize := 1, 2
-	romBytes := createHeaderBytes("NES\x1A", prgPageSize, chrPageSize)
+	romBytes := createHeaderBytes(magicNumber, prgPageSize, chrPageSize)
 
 	header, err := newHeader(romBytes)
 	if err != nil {
