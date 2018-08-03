@@ -11,6 +11,7 @@ type Cassette struct {
 	chrRom []byte
 }
 
+// NewCassette is build a cassette struct by byte information of a NES rom file.
 func NewCassette(romBytes []byte) (*Cassette, error) {
 	if romBytes == nil || len(romBytes) < 16 {
 		return nil, errors.New("invalid .nes file. rom file byte length is not enough")
