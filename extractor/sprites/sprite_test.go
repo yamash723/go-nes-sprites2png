@@ -36,7 +36,7 @@ func TestBuildSpriteSuccess(t *testing.T) {
 		[8]uint{0, 0, 0, 2, 2, 2, 2, 2},
 	}
 
-	sprite := BuildSprite(spriteByte)
+	sprite := buildSprite(spriteByte)
 	actualArray := sprite.toArrayInt()
 
 	if expectArray != actualArray {
@@ -82,5 +82,43 @@ func TestOverlapChannelSuccess(t *testing.T) {
 
 	if expectArray != actualArray {
 		t.Errorf("overlapChannel() is failed. expect: %v / actual: %v", expectArray, actualArray)
+	}
+}
+
+func TestBuildSpritesSuccess(t *testing.T) {
+	characterRom := []byte{
+		0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,
+		0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,
+	}
+
+	sprites, err := BuildSprites(characterRom)
+	if err != nil {
+		t.Fatalf("BuildSprites() is failed. return error: %v", err)
+	}
+
+	actualLength := len(sprites)
+	if 2 != actualLength {
+		t.Errorf("BuildSprites() is failed. expect: %v / actual: %v", 2, actualLength)
+	}
+}
+func TestBuildSpritesNilFailed(t *testing.T) {
+	_, err := BuildSprites(nil)
+	if err == nil {
+		t.Errorf("BuildSprites() is succeeded with nil byte ")
+	}
+}
+
+func TestBuildSpritesIrregularFailed(t *testing.T) {
+	notMultipleOf16Bytes := []byte{
+		0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F, 0x1F,
+		0xF8, 0xF8, 0xF8, 0xF8, 0xF8, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x1F, 0x1F, 0x1F, 0x1F,
+	}
+	_, err := BuildSprites(notMultipleOf16Bytes)
+	if err == nil {
+		t.Errorf("BuildSprites() is succeeded with no multiple of 16 byte ")
 	}
 }

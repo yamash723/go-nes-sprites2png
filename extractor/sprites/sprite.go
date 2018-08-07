@@ -1,5 +1,7 @@
 package sprite
 
+import "errors"
+
 // Sprite is type of the NES rom sprite. Sprite has a array of sprite number
 type Sprite [8][8]uint
 
@@ -7,8 +9,28 @@ func (s *Sprite) toArrayInt() [8][8]uint {
 	return [8][8]uint(*s)
 }
 
-// BuildSprite is build sprite type from 16 length bytes
-func BuildSprite(spriteBytes [16]byte) *Sprite {
+// BuildSprites is build sprite array from character rom.
+func BuildSprites(characterRom []byte) ([]*Sprite, error) {
+	if characterRom == nil || len(characterRom)%16 != 0 {
+		return nil, errors.New("invalid sprite bytes. bytes is empty or no multiple of 16")
+	}
+
+	spriteLength := len(characterRom) / 16
+	sprites := make([]*Sprite, spriteLength)
+
+	var spriteBytes [16]byte
+	for i := 0; i < spriteLength; i++ {
+		startPos := i * 16
+		endPost := startPos + 16
+
+		copy(spriteBytes[:], characterRom[startPos:endPost])
+		sprites[i] = buildSprite(spriteBytes)
+	}
+
+	return sprites, nil
+}
+
+func buildSprite(spriteBytes [16]byte) *Sprite {
 	var channel1, channel2 [8]byte
 	copy(channel1[:], spriteBytes[0:8])
 	copy(channel2[:], spriteBytes[8:16])
