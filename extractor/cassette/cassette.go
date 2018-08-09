@@ -8,7 +8,7 @@ const chrUnitSize int = 0x2000 // 8192 byte
 
 // Cassette has header and character rom data
 type Cassette struct {
-	chrRom []byte
+	CharacterRom []byte
 }
 
 // NewCassette is build a cassette struct by byte information of a NES rom file.
@@ -27,7 +27,7 @@ func NewCassette(romBytes []byte) (*Cassette, error) {
 
 	startIdx := headerSize + (header.PrgPageSize * prgUnitSize)
 	endIdx := startIdx + (header.ChrPageSize * chrUnitSize)
-	cassette := &Cassette{chrRom: romBytes[startIdx:endIdx]}
+	cassette := &Cassette{CharacterRom: romBytes[startIdx:endIdx]}
 
 	return cassette, nil
 }

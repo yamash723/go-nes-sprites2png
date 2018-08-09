@@ -10,8 +10,8 @@ func TestNewCassetteSuccess(t *testing.T) {
 	}
 
 	chrRomSize := 2 * chrUnitSize
-	if chrRomSize != len(cassette.chrRom) {
-		t.Errorf("NewCassette() is failed. character data size is wrong. expect: %v / actual: %v", chrRomSize, cassette.chrRom)
+	if chrRomSize != len(cassette.CharacterRom) {
+		t.Errorf("NewCassette() is failed. character data size is wrong. expect: %v / actual: %v", chrRomSize, cassette.CharacterRom)
 	}
 }
 
