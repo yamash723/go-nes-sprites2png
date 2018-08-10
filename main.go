@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pkg/errors"
 	"github.com/yamash723/go-nes-sprites2png/extractor"
 )
 
@@ -31,7 +30,7 @@ func main() {
 
 	err := extractor.Execute(*romPath, *outputPath, *width, *height)
 	if err != nil {
-		errors.Wrap(err, "extract is failed.")
+		fmt.Println(err)
 		os.Exit(1)
 	}
 }
