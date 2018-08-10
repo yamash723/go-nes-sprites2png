@@ -37,7 +37,7 @@ func TestBuildSpriteSuccess(t *testing.T) {
 	}
 
 	sprite := buildSprite(spriteByte)
-	actualArray := sprite.toArrayInt()
+	actualArray := sprite.ToArrayInt()
 
 	if expectArray != actualArray {
 		t.Errorf("BuildSprite() is failed. expect: %v / actual: %v", expectArray, actualArray)

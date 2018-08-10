@@ -5,7 +5,8 @@ import "errors"
 // Sprite is type of the NES rom sprite. Sprite has a array of sprite number
 type Sprite [8][8]uint
 
-func (s *Sprite) toArrayInt() [8][8]uint {
+// ToArrayInt is export a sprite value by array type
+func (s *Sprite) ToArrayInt() [8][8]uint {
 	return [8][8]uint(*s)
 }
 
