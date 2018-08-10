@@ -12,7 +12,7 @@ import (
 var (
 	romPath    = flag.String("r", "", "input rom file path")
 	outputPath = flag.String("o", "", "export png file name")
-	width      = flag.Int("w", 220, "output png file width size")
+	width      = flag.Int("w", 400, "output png file width size")
 	height     = flag.Int("h", 100, "output png file height size")
 )
 
@@ -32,5 +32,6 @@ func main() {
 	err := extractor.Execute(*romPath, *outputPath, *width, *height)
 	if err != nil {
 		errors.Wrap(err, "extract is failed.")
+		os.Exit(1)
 	}
 }
