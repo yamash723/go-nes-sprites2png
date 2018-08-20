@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"fmt"
+	"log"
 	"os"
 
 	"github.com/yamash723/go-nes-sprites2png/extractor"
@@ -19,18 +19,18 @@ func main() {
 	flag.Parse()
 
 	if *romPath == "" {
-		fmt.Println("input rom file path is empty. you should input file path.")
+		log.Println("input rom file path is empty. you should input file path.")
 		os.Exit(1)
 	}
 
 	if *outputPath == "" {
-		fmt.Println("output file path is empty. you should input file path.")
+		log.Println("output file path is empty. you should input file path.")
 		os.Exit(1)
 	}
 
 	err := extractor.Execute(*romPath, *outputPath, *width, *height)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		os.Exit(1)
 	}
 }
